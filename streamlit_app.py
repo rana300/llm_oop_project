@@ -63,7 +63,7 @@ if not manager.models:
     st.info("Add a model from the sidebar to get started.")
     st.stop()
 
-names = [m.model_name for m in manager.models]
+names = [m.model_name for m in manager.models.values()]
 tab_chat, tab_models, tab_cost, tab_select = st.tabs(["Chat", "Models", "Cost", "Select"])
 
 with tab_chat:
@@ -104,7 +104,7 @@ with tab_models:
             "temperature": m.temperature,
             "active": m.is_active,
         }
-        for m in manager.models
+        for m in manager.models.values()
     ]
     st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
 
@@ -145,7 +145,7 @@ with tab_cost:
             st.error(str(e))
 
 with tab_select:
-    providers = sorted({m.provider for m in manager.models})
+    providers = sorted({m.provider for m in manager.models.values()})
     provider_choice = st.selectbox("Provider", providers)
     required = st.number_input("Required tokens", min_value=1, value=500, step=100)
     if st.button("Find model"):

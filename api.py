@@ -73,7 +73,7 @@ def create_model(body: ModelCreate):
 
 @app.get("/models")
 def list_models():
-    return {"total": LanguageModel.total_models, "models": [describe(m) for m in manager.models]}
+    return {"total": LanguageModel.total_models, "models": [describe(m) for m in manager.models.values()]}
 
 
 @app.get("/models/select")
